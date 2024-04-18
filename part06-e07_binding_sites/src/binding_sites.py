@@ -56,13 +56,11 @@ def cluster_euclidean(filename):
     features, labels = get_features_and_labels(filename)
     clustering = AgglomerativeClustering(n_clusters=2, affinity='euclidean', linkage='average')
     y_pred = clustering.fit_predict(features, labels)
+    #adapting infered labels to expected ones
     permutation = find_permutation(2, labels, y_pred)
     new_labels = [permutation[label] for label in clustering.labels_]
     score = accuracy_score(labels, new_labels)
-
-
     return score
-
 
 def cluster_hamming(filename):
     features, labels = get_features_and_labels(filename)
@@ -70,6 +68,7 @@ def cluster_hamming(filename):
     print(distance)
     clustering = AgglomerativeClustering(n_clusters=2, affinity='precomputed', linkage='average')
     y_pred = clustering.fit_predict(distance, labels)
+    #adapting infered labels to expected ones
     permutation = find_permutation(2, labels, y_pred)
     new_labels = [permutation[label] for label in clustering.labels_]
     score = accuracy_score(labels, new_labels)
